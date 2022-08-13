@@ -14,18 +14,46 @@ export class SpaceShipsController extends BaseController {
             .post('', this.create)
             .delete('/id', this. remove)
     }
-    getAll(arg0, getAll) {
-        throw new Error('Method not implemented.')
+    async getAll(req, res, next) {
+        try {
+            const query = req.query
+            const spaceShips = await spaceShipsService.getAll(query) //where does query come from?
+            return res.send(spaceShips)
+        } catch (error) {
+            logger.log(error)
+            next(error)
+        }
     }
-    getById(arg0, getById) {
-        throw new Error('Method not implemented.')
+    async getById(req, res, next) {
+        try {
+            const spaceShip = await spaceShipsService.getById(req.params.id)
+            return res.send(spaceShip)
+        } catch (error) {
+            logger.log(error)    
+            next(error)        
+        }
     }
-    getPackagesOnShip(arg0, getPackagesOnShip) {
-        throw new Error('Method not implemented.')
+
+    async getPackagesOnShip(req, res, next) {
+        try {
+            let packages = await packagesService.getPackagesOnShip(req.params.id)
+            res.send(packages)
+        } catch (error) {
+            next(error)
+        }
     }
-    create(req, res, next) {
-        throw new Error('Method not implemented.')
+
+    async create(req, res, next) {
+        try {
+            // req.body.creatorId = req.userInfo.id // need to review this? Important
+            const spaceShip = await spaceShipsService.create(req.body)
+            res.send(spaceShip)            
+        } catch (error) {
+            logger.log(error)
+            next(error)
+        }
     }
+
     async remove(req, res, next) {
         try {
             const spaceShipId = req.params.id
