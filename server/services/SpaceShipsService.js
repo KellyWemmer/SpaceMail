@@ -3,16 +3,27 @@ import { BadRequest, Forbidden } from '../utils/Errors'
 
 class SpaceShipsService {
     async getAll(query = {}) {
-        return await dbContext.SpaceShips
+        return await dbContext.SpaceShips.find(query).populate('creatorInfo', 'name picture')
     }
-    getById(id) {
-        throw new Error('Method not implemented.')
+    async getById(id) {
+        const spaceShip = await dbContext.SpaceShips.findById(id).populate('creatorInfo', 'name picture')
+        if (!spaceShip) {
+            throw new BadRequest('Invalid Hull Id')
+        }
+        return spaceShip
     }
-    create(body) {
-        throw new Error('Method not implemented.')
+    async create(body) {
+        let spaceShip = await dbContext.SpaceShips.create(body)
+        await spaceShip.populate('creatorInfo', 'name picture')
+        return spaceShip    
     }
-    remove(spaceShipId, userId) {
-        throw new Error('Method not implemented.')
+
+    async remove(spaceShipId, userId) {
+        const spaceShip = await this.getById(spaceShipId)
+        if (spaceShip.creatorId.toString() !== userId) {
+            throw new Forbidden('You lack the proper documentation to complete this action')
+        }
+        await spaceShip.remove()
     }
 
 }
