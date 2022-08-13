@@ -9,10 +9,10 @@ export class SpaceShipsController extends BaseController {
         this.router
             .get('', this.getAll) //endpoint: http://localhost:3000/api/spaceships
             .get('/id', this.getById) //endpoint: http://localhost:3000/api/spaceships/id 
-            .get('/:id/packages', this.getPackagesOnShip) //endpoint: http://localhost:3000/api/spaceships/1/packages 
+            // .get('/:id/packages', this.getPackagesOnShip) //endpoint: http://localhost:3000/api/spaceships/1/packages 
             // .use(Auth0Provider.getAuthorizedUserInfo) --where does this come from?
             .post('', this.create)
-            .delete('/id', this. remove)
+            // .delete('/id', this. remove)
     }
     async getAll(req, res, next) {
         try {
@@ -34,14 +34,14 @@ export class SpaceShipsController extends BaseController {
         }
     }
 
-    async getPackagesOnShip(req, res, next) {
-        try {
-            let packages = await packagesService.getPackagesOnShip(req.params.id)
-            res.send(packages)
-        } catch (error) {
-            next(error)
-        }
-    }
+    // async getPackagesOnShip(req, res, next) {
+    //     try {
+    //         let packages = await packagesService.getPackagesOnShip(req.params.id)
+    //         res.send(packages)
+    //     } catch (error) {
+    //         next(error)
+    //     }
+    // }
 
     async create(req, res, next) {
         try {
@@ -54,16 +54,16 @@ export class SpaceShipsController extends BaseController {
         }
     }
 
-    async remove(req, res, next) {
-        try {
-            const spaceShipId = req.params.id
-            const userId = req.params.id //the user who is logged in
-            await spaceShipsService.remove(spaceShipId, userId)
-            return res.send('This ship has been decommissioned')
-        } catch (error) {
-            logger.log(error)
-            next(error)
-        }
-    }
+    // async remove(req, res, next) {
+    //     try {
+    //         const spaceShipId = req.params.id
+    //         const userId = req.params.id //the user who is logged in
+    //         await spaceShipsService.remove(spaceShipId, userId)
+    //         return res.send('This ship has been decommissioned')
+    //     } catch (error) {
+    //         logger.log(error)
+    //         next(error)
+    //     }
+    // }
 }
 

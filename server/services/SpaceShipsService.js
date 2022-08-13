@@ -18,14 +18,14 @@ class SpaceShipsService {
         return spaceShip    
     }
 
-    async remove(spaceShipId, userId) {
-        const spaceShip = await this.getById(spaceShipId)
-        if (spaceShip.creatorId.toString() !== userId) {
-            throw new Forbidden('You lack the proper documentation to complete this action')
-        }
-        await spaceShip.remove()
-    }
-
+    // async remove(spaceShipId, userId) {
+    //     const spaceShip = await this.getById(spaceShipId)
+    //     if (spaceShip.creatorId.toString() !== userId) {
+    //         throw new Forbidden('You lack the proper documentation to complete this action')
+    //     }
+    //     await spaceShip.remove()
+    //     return spaceShip
+    // }
 }
 
 export const spaceShipsService = new SpaceShipsService()
