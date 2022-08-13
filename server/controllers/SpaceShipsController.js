@@ -3,6 +3,7 @@ import { Auth0Provider } from '@bcwdev/auth0provider'
 import { spaceShipsService } from '../services/SpaceShipsService.js'
 import { logger } from '../utils/Logger'
 
+
 export class SpaceShipsController extends BaseController {
     constructor() {
         super('api/spaceships')
